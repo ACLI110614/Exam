@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="jquery-1.9.1.min.js"></script>
+
+<script>
+    function getData(keyword){
+      $.ajax({
+  type: "POST",
+  url: "getdata.php",
+  dataType:"JSON",
+  data:{
+      search:keyword
+  },
+  
+  success:function(data){
+      $("#content ul").html("");
+      //console.log(JSON.stringify(data));
+      console.log(data.total);
+      $.each(data.movies,function(){
+          $("#content ul").append("<li class='title'>"+this.title+"</li>");
+      });
+//$("#content").html(this);
+    }
+});  
+    };
+   $(document).ready(function(){
+       $("#searchme").click(function(){
+        getData($("#searchContent").val());
+       });
+   });
+ 
+</script>
+    <style>
+        #header{
+            height:20px;
+            background: #666;
+            color:#fff;
+            padding:20px;
+        }
+        #content{
+            padding:20px;
+        }
+        
+        .title{
+            padding:10px;
+            margin:2px;
+            background:#66ccff;
+            list-style-type:none;
+        }
+        
+        .title:hover{
+            background: #66ff99;
+        }
+        
+        #total{
+            width:200px;
+            margin:0 auto;
+            padding:10px;
+            margin:10px;
+            color:red;
+        }
+        
+        #searchContainer{
+           width:300px;
+           margin:0 auto;
+        }
+    </style>
+    </head>
+    
+    <body>
+        <div id="header">
+            <div id="searchContainer"><input type="text" id="searchContent"><button id="searchme">Search</button></div>
+        </div>
+      
+        <div id="content"><ul></ul></div>
+        <div id="footer"></div>
+    </body>
+</html>
